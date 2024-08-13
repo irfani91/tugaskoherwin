@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"math"
+	"math/rand"
 	"sort"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -23,11 +25,11 @@ func main() {
 	// fmt.Println(string(findTheDifference("abcd", "abced"))) // 'e'
 	// fmt.Println(string(findTheDifference("", "y")))         // 'y'
 
-	fmt.Println(canMakeArithmeticProgression([]int{1, 5, 3}))    // true; 1, 3, 5 adalah baris aritmatik +2
-	fmt.Println(canMakeArithmeticProgression([]int{5, 1, 9}))    // true; 9, 5, 1 adalah baris aritmatik -4
-	fmt.Println(canMakeArithmeticProgression([]int{1, 2, 4, 8})) // false; 1, 2, 4, 8 bukan baris aritmatik, melainkan geometrik x2
+	// fmt.Println(canMakeArithmeticProgression([]int{1, 5, 3}))    // true; 1, 3, 5 adalah baris aritmatik +2
+	// fmt.Println(canMakeArithmeticProgression([]int{5, 1, 9}))    // true; 9, 5, 1 adalah baris aritmatik -4
+	// fmt.Println(canMakeArithmeticProgression([]int{1, 2, 4, 8})) // false; 1, 2, 4, 8 bukan baris aritmatik, melainkan geometrik x2
 
-	//tesDeck()
+	tesDeck()
 }
 
 // https://leetcode.com/problems/sign-of-the-product-of-an-array
@@ -209,18 +211,30 @@ type Card struct {
 // assume Ace-Spade on top of deck.
 func (d *Deck) New() {
 	// write code here
+	cards := []int{0, 1, 2, 3}
+	for _, v := range cards {
+		for i := 1; i <= 13; i++ {
+			d.cards = append(d.cards, Card{symbol: v, number: i})
+		}
+	}
 }
 
 // PeekTop return n cards from the top
 func (d Deck) PeekTop(n int) []Card {
 	// write code here
-	return nil
+	if n > len(d.cards) {
+		n = len(d.cards)
+	}
+	return d.cards[:n]
 }
 
 // PeekTop return n cards from the bottom
 func (d Deck) PeekBottom(n int) []Card {
 	// write code here
-	return nil
+	if n > len(d.cards) {
+		n = len(d.cards)
+	}
+	return d.cards[len(d.cards)-n:]
 }
 
 // PeekCardAtIndex return a card at specified index
@@ -231,12 +245,21 @@ func (d Deck) PeekCardAtIndex(idx int) Card {
 // Shuffle randomly shuffle the deck
 func (d *Deck) Shuffle() {
 	// write code here
+	rand.Seed(time.Now().UnixNano())
+	for i := len(d.cards) - 1; i > 0; i-- {
+		j := rand.Intn(i + 1)
+		d.cards[i], d.cards[j] = d.cards[j], d.cards[i]
+	}
 }
 
 // Cut perform single "Cut" technique. Move n top cards to bottom
 // e.g. Deck: [1, 2, 3, 4, 5]. Cut(3) resulting Deck: [4, 5, 1, 2, 3]
 func (d *Deck) Cut(n int) {
 	// write code here
+	if n > len(d.cards) {
+		n = len(d.cards)
+	}
+	d.cards = append(d.cards[n:], d.cards[:n]...)
 }
 
 func (c Card) ToString() string {

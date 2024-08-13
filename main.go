@@ -11,23 +11,23 @@ import (
 
 func main() {
 
-	// fmt.Println("hello world")
+	fmt.Println("hello world")
 
-	// fmt.Println(arraySign([]int{2, 1}))                    // 1
-	// fmt.Println(arraySign([]int{-2, 1}))                   // -1
-	// fmt.Println(arraySign([]int{-1, -2, -3, -4, 3, 2, 1})) // 1
+	fmt.Println(arraySign([]int{2, 1}))                    // 1
+	fmt.Println(arraySign([]int{-2, 1}))                   // -1
+	fmt.Println(arraySign([]int{-1, -2, -3, -4, 3, 2, 1})) // 1
 
-	// fmt.Println(isAnagram("anak", "kana"))       // true
-	// fmt.Println(isAnagram("anak", "mana"))       // false
-	// fmt.Println(isAnagram("anagram", "managra")) // true
+	fmt.Println(isAnagram("anak", "kana"))       // true
+	fmt.Println(isAnagram("anak", "mana"))       // false
+	fmt.Println(isAnagram("anagram", "managra")) // true
 
-	// fmt.Println(string(findTheDifference("abcd", "abcde"))) // 'e'
-	// fmt.Println(string(findTheDifference("abcd", "abced"))) // 'e'
-	// fmt.Println(string(findTheDifference("", "y")))         // 'y'
+	fmt.Println(string(findTheDifference("abcd", "abcde"))) // 'e'
+	fmt.Println(string(findTheDifference("abcd", "abced"))) // 'e'
+	fmt.Println(string(findTheDifference("", "y")))         // 'y'
 
-	// fmt.Println(canMakeArithmeticProgression([]int{1, 5, 3}))    // true; 1, 3, 5 adalah baris aritmatik +2
-	// fmt.Println(canMakeArithmeticProgression([]int{5, 1, 9}))    // true; 9, 5, 1 adalah baris aritmatik -4
-	// fmt.Println(canMakeArithmeticProgression([]int{1, 2, 4, 8})) // false; 1, 2, 4, 8 bukan baris aritmatik, melainkan geometrik x2
+	fmt.Println(canMakeArithmeticProgression([]int{1, 5, 3}))    // true; 1, 3, 5 adalah baris aritmatik +2
+	fmt.Println(canMakeArithmeticProgression([]int{5, 1, 9}))    // true; 9, 5, 1 adalah baris aritmatik -4
+	fmt.Println(canMakeArithmeticProgression([]int{1, 2, 4, 8})) // false; 1, 2, 4, 8 bukan baris aritmatik, melainkan geometrik x2
 
 	tesDeck()
 }

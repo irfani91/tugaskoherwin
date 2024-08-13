@@ -3,28 +3,29 @@ package main
 import (
 	"fmt"
 	"math"
+	"sort"
 	"strings"
 )
 
 func main() {
 
-	fmt.Println("hello world")
+	// fmt.Println("hello world")
 
-	fmt.Println(arraySign([]int{2, 1}))                    // 1
-	fmt.Println(arraySign([]int{-2, 1}))                   // -1
-	fmt.Println(arraySign([]int{-1, -2, -3, -4, 3, 2, 1})) // 1
+	// fmt.Println(arraySign([]int{2, 1}))                    // 1
+	// fmt.Println(arraySign([]int{-2, 1}))                   // -1
+	// fmt.Println(arraySign([]int{-1, -2, -3, -4, 3, 2, 1})) // 1
 
-	fmt.Println(isAnagram("anak", "kana"))       // true
-	fmt.Println(isAnagram("anak", "mana"))       // false
-	fmt.Println(isAnagram("anagram", "managra")) // true
+	// fmt.Println(isAnagram("anak", "kana"))       // true
+	// fmt.Println(isAnagram("anak", "mana"))       // false
+	// fmt.Println(isAnagram("anagram", "managra")) // true
 
-	fmt.Println(findTheDifference("abcd", "abcde")) // 'e'
-	fmt.Println(findTheDifference("abcd", "abced")) // 'e'
-	fmt.Println(findTheDifference("", "y"))         // 'y'
+	// fmt.Println(string(findTheDifference("abcd", "abcde"))) // 'e'
+	// fmt.Println(string(findTheDifference("abcd", "abced"))) // 'e'
+	// fmt.Println(string(findTheDifference("", "y")))         // 'y'
 
-	// canMakeArithmeticProgression([]int{1, 5, 3})    // true; 1, 3, 5 adalah baris aritmatik +2
-	// canMakeArithmeticProgression([]int{5, 1, 9})    // true; 9, 5, 1 adalah baris aritmatik -4
-	// canMakeArithmeticProgression([]int{1, 2, 4, 8}) // false; 1, 2, 4, 8 bukan baris aritmatik, melainkan geometrik x2
+	fmt.Println(canMakeArithmeticProgression([]int{1, 5, 3}))    // true; 1, 3, 5 adalah baris aritmatik +2
+	fmt.Println(canMakeArithmeticProgression([]int{5, 1, 9}))    // true; 9, 5, 1 adalah baris aritmatik -4
+	fmt.Println(canMakeArithmeticProgression([]int{1, 2, 4, 8})) // false; 1, 2, 4, 8 bukan baris aritmatik, melainkan geometrik x2
 
 	//tesDeck()
 }
@@ -133,26 +134,24 @@ func findTheDifference(s string, t string) byte {
 		}
 	}()
 
-	if len(s) >= 1 && len(s) <= 1000 && len(t) == len(s)+1 {
+	if len(s) >= 0 && len(s) <= 1000 {
 		s := strings.ToLower(s)
 		t := strings.ToLower(t)
-		count := make(map[rune]int)
-
-		// Count characters in s
+		// loop map  characters in s
+		countMap := map[rune]int{}
 		for _, v := range s {
-			count[v]++
+			countMap[v]++
 		}
 
-		// Count characters in t and find the extra character
+		// loop t, if character is 0, added character
 		for _, v := range t {
-			count[v]--
-			if count[v] < 0 {
+			countMap[v]--
+			if countMap[v] < 0 {
 				return byte(v)
 			}
 		}
 
-		b := byte('a')
-		return b
+		return 0
 
 	} else {
 		panic("erroy findTheDifference : Strings are within the valid length range.")
@@ -161,8 +160,37 @@ func findTheDifference(s string, t string) byte {
 
 // https://leetcode.com/problems/can-make-arithmetic-progression-from-sequence
 func canMakeArithmeticProgression(arr []int) bool {
-	// write code here
-	return false
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println(r)
+		}
+	}()
+
+	bottomLimit := -int(math.Pow(-10.0, 6.0))
+	upperLimit := int(math.Pow(10.0, 6.0))
+	if len(arr) >= 2 && len(arr) <= 1000 {
+		// Sort  array
+		sort.Ints(arr)
+
+		// Calculate the common difference
+		countDiff := arr[1] - arr[0]
+
+		// Check if the difference between all consecutive elements is the same
+		for i := 2; i < len(arr); i++ {
+			if arr[i] >= bottomLimit && arr[i] <= upperLimit {
+				if arr[i]-arr[i-1] != countDiff {
+					return false
+				}
+			} else {
+				panic("erroy canMakeArithmeticProgression : Value array are within the valid length range.")
+			}
+		}
+
+		return true
+
+	} else {
+		panic("erroy canMakeArithmeticProgression : Array are within the valid length range.")
+	}
 }
 
 // Deck represent "standard" deck consist of 52 cards

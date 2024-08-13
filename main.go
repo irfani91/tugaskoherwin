@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"strings"
 )
 
 func main() {
@@ -17,9 +18,9 @@ func main() {
 	fmt.Println(isAnagram("anak", "mana"))       // false
 	fmt.Println(isAnagram("anagram", "managra")) // true
 
-	// findTheDifference("abcd", "abcde") // 'e'
-	// findTheDifference("abcd", "abced") // 'e'
-	// findTheDifference("", "y")         // 'y'
+	fmt.Println(findTheDifference("abcd", "abcde")) // 'e'
+	fmt.Println(findTheDifference("abcd", "abced")) // 'e'
+	fmt.Println(findTheDifference("", "y"))         // 'y'
 
 	// canMakeArithmeticProgression([]int{1, 5, 3})    // true; 1, 3, 5 adalah baris aritmatik +2
 	// canMakeArithmeticProgression([]int{5, 1, 9})    // true; 9, 5, 1 adalah baris aritmatik -4
@@ -79,10 +80,12 @@ func isAnagram(s string, t string) bool {
 			fmt.Println(r)
 		}
 	}()
-		s := strings.ToLower(s)
-'		t:= strings.ToLower(t)
+
 	upperLimit := 5 * int(math.Pow(10.0, 4.0))
 	if len(s) >= 1 && len(t) <= upperLimit {
+		s := strings.ToLower(s)
+		t := strings.ToLower(t)
+
 		// check if length strings different or not
 		if len(s) != len(t) {
 			return false
@@ -124,9 +127,36 @@ func isAnagram(s string, t string) bool {
 
 // https://leetcode.com/problems/find-the-difference
 func findTheDifference(s string, t string) byte {
-	// write code here
-	b := byte('a')
-	return b
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println(r)
+		}
+	}()
+
+	if len(s) >= 1 && len(s) <= 1000 && len(t) == len(s)+1 {
+		s := strings.ToLower(s)
+		t := strings.ToLower(t)
+		count := make(map[rune]int)
+
+		// Count characters in s
+		for _, v := range s {
+			count[v]++
+		}
+
+		// Count characters in t and find the extra character
+		for _, v := range t {
+			count[v]--
+			if count[v] < 0 {
+				return byte(v)
+			}
+		}
+
+		b := byte('a')
+		return b
+
+	} else {
+		panic("erroy findTheDifference : Strings are within the valid length range.")
+	}
 }
 
 // https://leetcode.com/problems/can-make-arithmetic-progression-from-sequence
